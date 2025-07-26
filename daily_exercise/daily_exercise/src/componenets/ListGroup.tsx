@@ -1,14 +1,18 @@
-import styles from "../assets/styles/ListGroup.module.css";
+import "../assets/styles/ListGroup.css";
+import styled from "styled-components";
+import { AiFillLike } from "react-icons/ai";
+
+const ListItem = styled.li`
+  list-style: none;
+`;
 const ListGroup = () => {
   const items = ["Lucknow", "Mumbai", "Bengaluru", "Ahemdabad"];
   return (
     <>
+      <AiFillLike />
       <h1>Capitals</h1>
       {items.map((item, index) => (
-        <li className={[styles.listGroup, styles.container].join(" ")}>
-          {" "}
-          {item}
-        </li>
+        <ListItem> {item}</ListItem>
       ))}
     </>
   );
