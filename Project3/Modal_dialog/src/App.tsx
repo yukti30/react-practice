@@ -38,6 +38,7 @@ const Container = styled.div`
   text-align: center;
   .btn-close {
     border: 2px solid black;
+    cursor: pointer;
   }
 `;
 const Button = styled.div`

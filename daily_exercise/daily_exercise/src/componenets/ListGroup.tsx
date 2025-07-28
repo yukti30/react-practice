@@ -11,7 +11,7 @@ const ListGroup = () => {
     <>
       <AiFillLike />
       <h1>Capitals</h1>
-      {items.map((item, index) => (
+      {items.map((item) => (
         <ListItem> {item}</ListItem>
       ))}
     </>
