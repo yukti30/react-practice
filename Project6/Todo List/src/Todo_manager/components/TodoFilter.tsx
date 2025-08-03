@@ -1,7 +1,8 @@
 interface Props {
   priorities: string[];
+  handleChange: (category: string) => void;
 }
-const TodoFilter = ({ priorities }: Props) => {
+const TodoFilter = ({ priorities, handleChange }: Props) => {
   return (
     <>
       <label htmlFor="" className="form-control">
@@ -10,7 +11,7 @@ const TodoFilter = ({ priorities }: Props) => {
       <select
         id="Filter"
         className="form-control"
-        onChange={(e) => console.log(e.target.value)}
+        onChange={(e) => handleChange(e.target.value)}
       >
         <option value=""></option>
         {priorities.map((priority) => (
