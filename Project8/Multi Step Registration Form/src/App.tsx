@@ -4,11 +4,21 @@ import { useState } from "react";
 import PersonalDetails from "./components/PersonalDetails";
 import Skills from "./components/Skills";
 import styled from "styled-components";
-import Sumary from "./components/Sumary";
+// import Sumary from "./components/Sumary";
 
 function App() {
   const [currentpage, setCurrentPage] = useState(0);
   const [userData, setUserData] = useState({});
+  const user = {
+    name: "yukti",
+    email: "yuktigupta2012@gmail.com",
+    age: 25,
+    flatno: "1d402",
+    street: "Brookefield main rd",
+    city: "Bengaluru",
+    zip: 772076,
+    skillset: ["html", "css"],
+  };
   const handleNextButton = (id: number) => {
     setCurrentPage(id + 1);
     console.log(currentpage);
@@ -25,7 +35,9 @@ function App() {
           handlePrevButton={(id) => handlePrevButton(id)}
           handleNextButton={(id) => handleNextButton(id)}
           page_id={0}
-          onFormSubmit={(data) => setUserData({ ...userData, data })}
+          onFormSubmit={(data) => {
+            console.log(data);
+          }}
         >
           <ProgressBar progress={progress}>
             <div className="progress"></div>
@@ -37,7 +49,9 @@ function App() {
           handlePrevButton={(id) => handlePrevButton(id)}
           handleNextButton={(id) => handleNextButton(id)}
           page_id={1}
-          onFormSubmit={(data) => setUserData({ ...userData, data })}
+          onFormSubmit={(data) => {
+            console.log(data);
+          }}
         >
           <ProgressBar progress={progress}>
             <div className="progress"></div>
@@ -49,14 +63,17 @@ function App() {
           page_id={2}
           handlePrevButton={(id) => handlePrevButton(id)}
           handleNextButton={(id) => handleNextButton(id)}
-          onFormSubmit={(data) => setUserData({ ...userData, data })}
+          onFormSubmit={(data) => {
+            console.log(data);
+          }}
         >
           <ProgressBar progress={progress}>
             <div className="progress"></div>
           </ProgressBar>
         </Skills>
       )}
-      {currentpage === 3 && <Sumary user={userData}></Sumary>}
+      {userData}
+      {/* {currentpage === 3 && <Sumary></Sumary>} */}
     </>
   );
 }

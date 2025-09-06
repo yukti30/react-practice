@@ -33,7 +33,7 @@ const Skills = ({
   });
   useEffect(() => {
     setValue("skillset", skillset);
-  }, [setSkills]);
+  }, [skillset]);
   const skillref = useRef<HTMLInputElement>(null);
   const handleAddSkills = (event: FormEvent) => {
     event.preventDefault();
@@ -174,6 +174,7 @@ margin-top: 20px;
       border-radius: 5px;
       border: 0.5px solid grey;
       padding: 10px;
+      overflow-y: auto;
       }
   .button-container {
     width: 100%;

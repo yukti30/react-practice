@@ -1,13 +1,18 @@
+interface User {
+  name: string;
+  email: string;
+  age: number;
+  flatno: string;
+  street: string;
+  city: string;
+  zip: number;
+  skillset: string[];
+}
 interface Props {
-  user: {};
+  user: User;
 }
 const Sumary = ({ user }: Props) => {
-  return (
-    <>
-      <h1>Hi</h1>
-      {user}
-    </>
-  );
+  return <>{user}</>;
 };
 
 export default Sumary;
