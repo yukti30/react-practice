@@ -11,7 +11,7 @@ import SortSelector from "./components/SortSelector";
 export interface GameQuery {
   genre: Genre | null;
   platform: Platform | null;
-  sortOrder: String;
+  sortOrder: string;
 }
 function App() {
   // const [selectedGenre, setSelectedGenre] = useState<Genre | null>(null);
@@ -39,6 +39,7 @@ function App() {
           ></GenreList>
         </GridItem>
         <GridItem area="main">
+          {/* Instead of HStack we can also use Flex but it does not have spacing*/}
           <HStack spacing={5} paddingLeft={2} marginBottom={5}>
             <PlatformSelector
               selectedPlatform={gameQuery.platform}
