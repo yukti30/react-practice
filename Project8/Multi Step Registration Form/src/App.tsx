@@ -1,5 +1,11 @@
+import ProgressSlider from "./components/ProgressSlider";
+
 const App = () => {
-  return <div>App</div>;
+  return (
+    <>
+      <ProgressSlider></ProgressSlider>
+    </>
+  );
 };
 
 export default App;
