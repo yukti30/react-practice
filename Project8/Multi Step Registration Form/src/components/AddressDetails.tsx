@@ -1,7 +1,9 @@
 import {
+  Button,
   FormControl,
   FormErrorMessage,
   FormLabel,
+  HStack,
   Input,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
@@ -67,6 +69,14 @@ const AddressDetails = () => {
             <FormErrorMessage>{errors.zip.message}</FormErrorMessage>
           )}
         </FormControl>
+        <HStack justifyContent="space-between" padding={6}>
+          <Button colorScheme="teal" size="sm" type="button" disabled={false}>
+            Previous
+          </Button>
+          <Button colorScheme="teal" size="sm" type="submit">
+            Next
+          </Button>
+        </HStack>
       </form>
     </>
   );
