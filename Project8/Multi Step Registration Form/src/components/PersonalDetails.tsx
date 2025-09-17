@@ -25,9 +25,12 @@ const PersonalDetails = () => {
       <form onSubmit={handleSubmit((data) => console.log(data))}>
         <FormControl padding={6} isInvalid={!!errors.name}>
           <FormLabel>Full Name</FormLabel>
-          <Input {...register("name", { required: true })} type="text" />
+          <Input
+            {...register("name", { required: "Name is required" })}
+            type="text"
+          />
           {errors.name && (
-            <FormErrorMessage>Field is Required</FormErrorMessage>
+            <FormErrorMessage>{errors.name.message}</FormErrorMessage>
           )}
         </FormControl>
         <FormControl padding={6} isInvalid={!!errors.age}>
@@ -45,9 +48,12 @@ const PersonalDetails = () => {
         </FormControl>
         <FormControl padding={6} isInvalid={!!errors.email}>
           <FormLabel>Email address</FormLabel>
-          <Input {...register("email", { required: true })} type="email" />
+          <Input
+            {...register("email", { required: "Email is required" })}
+            type="email"
+          />
           {errors.email && (
-            <FormErrorMessage>Field is Required</FormErrorMessage>
+            <FormErrorMessage>{errors.email.message}</FormErrorMessage>
           )}
         </FormControl>
         <HStack justifyContent="space-between" padding={6}>
