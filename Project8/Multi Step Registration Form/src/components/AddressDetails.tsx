@@ -6,9 +6,15 @@ import {
   HStack,
   Input,
 } from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
+import { useForm, type FieldValues } from "react-hook-form";
 import { FcNext } from "react-icons/fc";
 import { FcPrevious } from "react-icons/fc";
+
+interface Props {
+  onPrevPress: () => void;
+  onNextPress: () => void;
+  onAddressDetailSubmit: (data: FieldValues) => void;
+}
 
 interface AddressDetails {
   houseno: string;
@@ -17,16 +23,25 @@ interface AddressDetails {
   zip: number;
 }
 
-const AddressDetails = () => {
+const AddressDetails = ({
+  onAddressDetailSubmit,
+  onNextPress,
+  onPrevPress,
+}: Props) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<AddressDetails>();
   return (
     <>
       {" "}
-      <form onSubmit={handleSubmit((data) => console.log(data))}>
+      <form
+        onSubmit={handleSubmit((data) => {
+          onAddressDetailSubmit(data);
+          onNextPress();
+        })}
+      >
         <FormControl padding={6} isInvalid={!!errors.houseno}>
           <FormLabel>House/Flat number</FormLabel>
           <Input
@@ -78,6 +93,7 @@ const AddressDetails = () => {
             type="button"
             disabled={false}
             leftIcon={<FcPrevious></FcPrevious>}
+            onClick={onPrevPress}
           >
             Previous
           </Button>
@@ -86,6 +102,7 @@ const AddressDetails = () => {
             size="sm"
             type="submit"
             rightIcon={<FcNext></FcNext>}
+            disabled={!isValid}
           >
             Next
           </Button>

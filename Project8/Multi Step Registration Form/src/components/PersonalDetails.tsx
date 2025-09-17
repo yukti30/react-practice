@@ -11,12 +11,23 @@ import { useForm, type FieldValues } from "react-hook-form";
 import { FcNext } from "react-icons/fc";
 import { FcPrevious } from "react-icons/fc";
 
+interface Props {
+  onPrevPress: () => void;
+  onNextPress: () => void;
+  onPersonalDetailSubmit: (data: FieldValues) => void;
+}
+
 interface PersonalDetails {
   name: string;
   age: number;
   email: string;
 }
-const PersonalDetails = () => {
+
+const PersonalDetails = ({
+  onPersonalDetailSubmit,
+  onNextPress,
+  onPrevPress,
+}: Props) => {
   const {
     handleSubmit,
     register,
@@ -24,7 +35,12 @@ const PersonalDetails = () => {
   } = useForm<PersonalDetails>();
   return (
     <>
-      <form onSubmit={handleSubmit((data) => console.log(data))}>
+      <form
+        onSubmit={handleSubmit((data) => {
+          onPersonalDetailSubmit(data);
+          onNextPress();
+        })}
+      >
         <FormControl padding={6} isInvalid={!!errors.name}>
           <FormLabel>Full Name</FormLabel>
           <Input
@@ -65,6 +81,7 @@ const PersonalDetails = () => {
             type="button"
             disabled={true}
             leftIcon={<FcPrevious></FcPrevious>}
+            onClick={onPrevPress}
           >
             Previous
           </Button>
@@ -73,6 +90,7 @@ const PersonalDetails = () => {
             size="sm"
             type="submit"
             rightIcon={<FcNext></FcNext>}
+            disabled={!isValid}
           >
             Next
           </Button>

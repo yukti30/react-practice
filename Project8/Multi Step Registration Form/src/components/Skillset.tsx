@@ -1,11 +1,16 @@
-import { Box, Button, HStack, Input, Select } from "@chakra-ui/react";
+import { Box, Button, HStack, Input, Select, Spinner } from "@chakra-ui/react";
 import { skills } from "../data/skills";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, type FieldValues } from "react-hook-form";
 import { MdCancel } from "react-icons/md";
 import { FcPrevious } from "react-icons/fc";
 import { MdAdd } from "react-icons/md";
-const Skillset = () => {
+
+interface Props {
+  onPrevPress: () => void;
+  onSkillsSubmit: (data: FieldValues) => void;
+}
+const Skillset = ({ onSkillsSubmit, onPrevPress }: Props) => {
   const { register, handleSubmit, setValue } = useForm();
   const [skillValue, setSkillValue] = useState("");
   const [skillSet, setSkillSet] = useState<string[]>([]);
@@ -75,7 +80,13 @@ const Skillset = () => {
         )}
       </HStack>
 
-      <Box height={"200px"} bgColor={"teal"} borderRadius={2} overflowY="auto">
+      <Box
+        height={"200px"}
+        bgColor={"teal"}
+        borderRadius={4}
+        overflowY="auto"
+        margin={6}
+      >
         {skillSet.map((skill, index) => (
           <Button marginLeft={2} key={index} rightIcon={<MdCancel></MdCancel>}>
             {skill}
@@ -83,7 +94,12 @@ const Skillset = () => {
         ))}
       </Box>
 
-      <form onSubmit={handleSubmit((data) => console.log(data))}>
+      <form
+        onSubmit={handleSubmit((data) => {
+          onSkillsSubmit(data);
+          return <Spinner></Spinner>;
+        })}
+      >
         <Input type="hidden" {...register("skillSet")}></Input>
         <HStack justifyContent="space-between" padding={6}>
           <Button
@@ -92,6 +108,7 @@ const Skillset = () => {
             type="button"
             disabled={false}
             leftIcon={<FcPrevious></FcPrevious>}
+            onSubmit={onPrevPress}
           >
             Previous
           </Button>
