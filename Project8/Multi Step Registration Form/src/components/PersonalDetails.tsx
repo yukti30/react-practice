@@ -8,6 +8,8 @@ import {
   HStack,
 } from "@chakra-ui/react";
 import { useForm, type FieldValues } from "react-hook-form";
+import { FcNext } from "react-icons/fc";
+import { FcPrevious } from "react-icons/fc";
 
 interface PersonalDetails {
   name: string;
@@ -57,10 +59,21 @@ const PersonalDetails = () => {
           )}
         </FormControl>
         <HStack justifyContent="space-between" padding={6}>
-          <Button colorScheme="teal" size="sm" type="button" disabled={true}>
+          <Button
+            colorScheme="teal"
+            size="sm"
+            type="button"
+            disabled={true}
+            leftIcon={<FcPrevious></FcPrevious>}
+          >
             Previous
           </Button>
-          <Button colorScheme="teal" size="sm" type="submit">
+          <Button
+            colorScheme="teal"
+            size="sm"
+            type="submit"
+            rightIcon={<FcNext></FcNext>}
+          >
             Next
           </Button>
         </HStack>

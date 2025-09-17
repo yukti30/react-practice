@@ -3,6 +3,8 @@ import { skills } from "../data/skills";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { MdCancel } from "react-icons/md";
+import { FcPrevious } from "react-icons/fc";
+import { MdAdd } from "react-icons/md";
 const Skillset = () => {
   const { register, handleSubmit, setValue } = useForm();
   const [skillValue, setSkillValue] = useState("");
@@ -37,18 +39,21 @@ const Skillset = () => {
           type="button"
           disabled={false}
           onClick={addSkill}
+          rightIcon={<MdAdd></MdAdd>}
         >
           Add
         </Button>
       </HStack>
       <HStack padding={6}>
         <Button
+          whiteSpace={"normal"}
           colorScheme="teal"
           size="sm"
           type="button"
           onClick={() => setInput(true)}
+          rightIcon={<MdAdd></MdAdd>}
         >
-          Other{" "}
+          Others
         </Button>
         {input && (
           <>
@@ -62,6 +67,7 @@ const Skillset = () => {
               type="button"
               disabled={false}
               onClick={addSkill}
+              rightIcon={<MdAdd></MdAdd>}
             >
               Add
             </Button>
@@ -80,7 +86,13 @@ const Skillset = () => {
       <form onSubmit={handleSubmit((data) => console.log(data))}>
         <Input type="hidden" {...register("skillSet")}></Input>
         <HStack justifyContent="space-between" padding={6}>
-          <Button colorScheme="teal" size="sm" type="button" disabled={false}>
+          <Button
+            colorScheme="teal"
+            size="sm"
+            type="button"
+            disabled={false}
+            leftIcon={<FcPrevious></FcPrevious>}
+          >
             Previous
           </Button>
           <Button colorScheme="teal" size="sm" type="submit">

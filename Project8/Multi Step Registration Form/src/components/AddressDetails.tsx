@@ -7,6 +7,8 @@ import {
   Input,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
+import { FcNext } from "react-icons/fc";
+import { FcPrevious } from "react-icons/fc";
 
 interface AddressDetails {
   houseno: string;
@@ -70,10 +72,21 @@ const AddressDetails = () => {
           )}
         </FormControl>
         <HStack justifyContent="space-between" padding={6}>
-          <Button colorScheme="teal" size="sm" type="button" disabled={false}>
+          <Button
+            colorScheme="teal"
+            size="sm"
+            type="button"
+            disabled={false}
+            leftIcon={<FcPrevious></FcPrevious>}
+          >
             Previous
           </Button>
-          <Button colorScheme="teal" size="sm" type="submit">
+          <Button
+            colorScheme="teal"
+            size="sm"
+            type="submit"
+            rightIcon={<FcNext></FcNext>}
+          >
             Next
           </Button>
         </HStack>
