@@ -8,7 +8,7 @@ const App = () => {
   const [pages, setPages] = useState(0);
   return (
     <>
-      <ProgressSlider></ProgressSlider>
+      <ProgressSlider pagesValue={pages}></ProgressSlider>
       {pages == 0 && (
         <PersonalDetails
           onNextPress={() => setPages(1)}
