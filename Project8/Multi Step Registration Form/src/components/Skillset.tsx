@@ -1,30 +1,25 @@
 import { Box, Button, HStack, Input, Select } from "@chakra-ui/react";
 import { skills } from "../data/skills";
-import { useEffect, useState } from "react";
-import { useForm, type FieldValues } from "react-hook-form";
-import { MdCancel } from "react-icons/md";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { MdCancel, MdAdd } from "react-icons/md";
 import { FcPrevious } from "react-icons/fc";
-import { MdAdd } from "react-icons/md";
 
-export interface skillSet {
+export interface SkillData {
   skills: string[];
 }
+
 interface Props {
   onNextPress: () => void;
   onPrevPress: () => void;
-  onSkillsSubmit: (data: FieldValues) => void;
+  onSkillsSubmit: (data: SkillData) => void;
 }
+
 const Skillset = ({ onSkillsSubmit, onPrevPress, onNextPress }: Props) => {
-  const { register, handleSubmit, setValue } = useForm<skillSet>({
-    defaultValues: JSON.parse(localStorage.getItem("user") || "{}"),
-  });
+  const { handleSubmit } = useForm();
   const [skillValue, setSkillValue] = useState("");
   const [skillSet, setSkillSet] = useState<string[]>([]);
   const [input, setInput] = useState(false);
-
-  useEffect(() => {
-    setValue("skillSet", skillSet);
-  }, [skillSet, setValue]);
 
   const addSkill = () => {
     if (skillValue && !skillSet.includes(skillValue)) {
@@ -32,11 +27,16 @@ const Skillset = ({ onSkillsSubmit, onPrevPress, onNextPress }: Props) => {
       setSkillValue("");
     }
   };
-  function handleSaveData(data: FieldValues) {
+
+  const removeSkill = (skillToRemove: string) => {
+    setSkillSet((prev) => prev.filter((skill) => skill !== skillToRemove));
+  };
+
+  const handleSaveData = () => {
     const existing = JSON.parse(localStorage.getItem("user") || "{}");
-    const updated = { ...existing, ...data }; // merge previous + new step
+    const updated = { ...existing, skills: skillSet };
     localStorage.setItem("user", JSON.stringify(updated));
-  }
+  };
 
   return (
     <>
@@ -53,21 +53,20 @@ const Skillset = ({ onSkillsSubmit, onPrevPress, onNextPress }: Props) => {
           colorScheme="teal"
           size="sm"
           type="button"
-          disabled={false}
           onClick={addSkill}
-          rightIcon={<MdAdd></MdAdd>}
+          rightIcon={<MdAdd />}
         >
           Add
         </Button>
       </HStack>
+
       <HStack padding={6}>
         <Button
-          whiteSpace={"normal"}
           colorScheme="teal"
           size="sm"
           type="button"
           onClick={() => setInput(true)}
-          rightIcon={<MdAdd></MdAdd>}
+          rightIcon={<MdAdd />}
         >
           Others
         </Button>
@@ -76,14 +75,13 @@ const Skillset = ({ onSkillsSubmit, onPrevPress, onNextPress }: Props) => {
             <Input
               value={skillValue}
               onChange={(e) => setSkillValue(e.target.value)}
-            ></Input>
+            />
             <Button
               colorScheme="teal"
               size="sm"
               type="button"
-              disabled={false}
               onClick={addSkill}
-              rightIcon={<MdAdd></MdAdd>}
+              rightIcon={<MdAdd />}
             >
               Add
             </Button>
@@ -92,40 +90,43 @@ const Skillset = ({ onSkillsSubmit, onPrevPress, onNextPress }: Props) => {
       </HStack>
 
       <Box
-        height={"200px"}
-        bgColor={"teal"}
+        height="200px"
+        bgColor="teal"
         borderRadius={4}
         overflowY="auto"
         margin={6}
       >
         {skillSet.map((skill, index) => (
-          <Button marginLeft={2} key={index} rightIcon={<MdCancel></MdCancel>}>
+          <Button
+            key={index}
+            marginLeft={2}
+            onClick={() => removeSkill(skill)}
+            rightIcon={<MdCancel />}
+          >
             {skill}
           </Button>
         ))}
       </Box>
 
       <form
-        onSubmit={handleSubmit((data) => {
-          onSkillsSubmit(data);
-          handleSaveData(data);
+        onSubmit={handleSubmit(() => {
+          onSkillsSubmit({ skills: skillSet });
+          handleSaveData();
           onNextPress();
         })}
       >
-        <Input type="hidden" {...register("skillSet")}></Input>
         <HStack justifyContent="space-between" padding={6}>
           <Button
             colorScheme="teal"
             size="sm"
             type="button"
-            disabled={false}
-            leftIcon={<FcPrevious></FcPrevious>}
-            onSubmit={onPrevPress}
+            leftIcon={<FcPrevious />}
+            onClick={onPrevPress}
           >
             Previous
           </Button>
           <Button colorScheme="teal" size="sm" type="submit">
-            Submit
+            Next
           </Button>
         </HStack>
       </form>

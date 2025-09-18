@@ -13,10 +13,10 @@ import { FcPrevious } from "react-icons/fc";
 interface Props {
   onPrevPress: () => void;
   onNextPress: () => void;
-  onAddressDetailSubmit: (data: FieldValues) => void;
+  onAddressDetailSubmit: (data: AddressData) => void;
 }
 
-export interface AddressDetails {
+export interface AddressData {
   houseno: string;
   street: string;
   city: string;
@@ -32,7 +32,7 @@ const AddressDetails = ({
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm<AddressDetails>({
+  } = useForm<AddressData>({
     defaultValues: JSON.parse(localStorage.getItem("user") || "{}"),
   });
   function handleSaveData(data: FieldValues) {

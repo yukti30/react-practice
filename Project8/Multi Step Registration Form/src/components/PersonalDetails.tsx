@@ -10,13 +10,13 @@ import { useForm, type FieldValues } from "react-hook-form";
 import { FcNext } from "react-icons/fc";
 import { FcPrevious } from "react-icons/fc";
 
-export interface Props {
+interface Props {
   onPrevPress: () => void;
   onNextPress: () => void;
-  onPersonalDetailSubmit: (data: FieldValues) => void;
+  onPersonalDetailSubmit: (data: PersonalData) => void;
 }
 
-interface PersonalDetails {
+export interface PersonalData {
   name: string;
   age: number;
   email: string;
@@ -31,7 +31,7 @@ const PersonalDetails = ({
     handleSubmit,
     register,
     formState: { errors, isValid },
-  } = useForm<PersonalDetails>({
+  } = useForm<PersonalData>({
     defaultValues: JSON.parse(localStorage.getItem("user") || "{}"),
   });
 
