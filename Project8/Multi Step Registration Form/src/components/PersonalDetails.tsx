@@ -2,7 +2,6 @@ import {
   FormControl,
   FormLabel,
   FormErrorMessage,
-  FormHelperText,
   Input,
   Button,
   HStack,
@@ -11,7 +10,7 @@ import { useForm, type FieldValues } from "react-hook-form";
 import { FcNext } from "react-icons/fc";
 import { FcPrevious } from "react-icons/fc";
 
-interface Props {
+export interface Props {
   onPrevPress: () => void;
   onNextPress: () => void;
   onPersonalDetailSubmit: (data: FieldValues) => void;
@@ -32,12 +31,22 @@ const PersonalDetails = ({
     handleSubmit,
     register,
     formState: { errors, isValid },
-  } = useForm<PersonalDetails>();
+  } = useForm<PersonalDetails>({
+    defaultValues: JSON.parse(localStorage.getItem("user") || "{}"),
+  });
+
+  function handleSaveData(data: FieldValues) {
+    const existing = JSON.parse(localStorage.getItem("user") || "{}");
+    const updated = { ...existing, ...data }; // merge previous + new step
+    localStorage.setItem("user", JSON.stringify(updated));
+  }
+
   return (
     <>
       <form
         onSubmit={handleSubmit((data) => {
           onPersonalDetailSubmit(data);
+          handleSaveData(data);
           onNextPress();
         })}
       >

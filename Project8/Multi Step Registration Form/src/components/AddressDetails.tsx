@@ -16,7 +16,7 @@ interface Props {
   onAddressDetailSubmit: (data: FieldValues) => void;
 }
 
-interface AddressDetails {
+export interface AddressDetails {
   houseno: string;
   street: string;
   city: string;
@@ -32,13 +32,22 @@ const AddressDetails = ({
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm<AddressDetails>();
+  } = useForm<AddressDetails>({
+    defaultValues: JSON.parse(localStorage.getItem("user") || "{}"),
+  });
+  function handleSaveData(data: FieldValues) {
+    const existing = JSON.parse(localStorage.getItem("user") || "{}");
+    const updated = { ...existing, ...data }; // merge previous + new step
+    localStorage.setItem("user", JSON.stringify(updated));
+  }
+
   return (
     <>
       {" "}
       <form
         onSubmit={handleSubmit((data) => {
           onAddressDetailSubmit(data);
+          handleSaveData(data);
           onNextPress();
         })}
       >

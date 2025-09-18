@@ -25,6 +25,7 @@ const App = () => {
       )}
       {pages == 2 && (
         <Skillset
+          onNextPress={() => setPages(3)}
           onPrevPress={() => setPages(1)}
           onSkillsSubmit={(data) => console.log(data)}
         ></Skillset>

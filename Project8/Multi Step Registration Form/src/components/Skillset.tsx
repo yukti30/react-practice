@@ -1,4 +1,4 @@
-import { Box, Button, HStack, Input, Select, Spinner } from "@chakra-ui/react";
+import { Box, Button, HStack, Input, Select } from "@chakra-ui/react";
 import { skills } from "../data/skills";
 import { useEffect, useState } from "react";
 import { useForm, type FieldValues } from "react-hook-form";
@@ -6,12 +6,18 @@ import { MdCancel } from "react-icons/md";
 import { FcPrevious } from "react-icons/fc";
 import { MdAdd } from "react-icons/md";
 
+export interface skillSet {
+  skills: string[];
+}
 interface Props {
+  onNextPress: () => void;
   onPrevPress: () => void;
   onSkillsSubmit: (data: FieldValues) => void;
 }
-const Skillset = ({ onSkillsSubmit, onPrevPress }: Props) => {
-  const { register, handleSubmit, setValue } = useForm();
+const Skillset = ({ onSkillsSubmit, onPrevPress, onNextPress }: Props) => {
+  const { register, handleSubmit, setValue } = useForm<skillSet>({
+    defaultValues: JSON.parse(localStorage.getItem("user") || "{}"),
+  });
   const [skillValue, setSkillValue] = useState("");
   const [skillSet, setSkillSet] = useState<string[]>([]);
   const [input, setInput] = useState(false);
@@ -26,6 +32,11 @@ const Skillset = ({ onSkillsSubmit, onPrevPress }: Props) => {
       setSkillValue("");
     }
   };
+  function handleSaveData(data: FieldValues) {
+    const existing = JSON.parse(localStorage.getItem("user") || "{}");
+    const updated = { ...existing, ...data }; // merge previous + new step
+    localStorage.setItem("user", JSON.stringify(updated));
+  }
 
   return (
     <>
@@ -97,7 +108,8 @@ const Skillset = ({ onSkillsSubmit, onPrevPress }: Props) => {
       <form
         onSubmit={handleSubmit((data) => {
           onSkillsSubmit(data);
-          return <Spinner></Spinner>;
+          handleSaveData(data);
+          onNextPress();
         })}
       >
         <Input type="hidden" {...register("skillSet")}></Input>
