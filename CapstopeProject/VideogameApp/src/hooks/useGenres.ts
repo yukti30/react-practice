@@ -11,11 +11,11 @@ export interface Genre {
 const apiClient = new APIClient<Genre>("/genres");
 
 const useGenres = () =>
-  useQuery<FetchResponse<Genre>>({
+  useQuery<FetchResponse<Genre> , Error >({
     queryKey: ["genres"],
-    queryFn: apiClient.getALL, 
+    queryFn: () => apiClient.getALL({}), 
     staleTime: 24 * 60 * 60 * 1000, // 24 hours
-    initialData: { count: genres.length, results: genres }, 
+    initialData: { count: genres.length, results: genres, next: null }, 
   });
 
 export default useGenres;
