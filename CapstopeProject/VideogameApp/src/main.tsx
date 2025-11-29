@@ -4,8 +4,10 @@ import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import theme from "./theme";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import App from "./App";
+// import App from "./App";
 // import { formToJSON } from "axios";
+import { RouterProvider } from "react-router-dom";
+import router from "./routes";
 
 const queryClient = new QueryClient();
 createRoot(document.getElementById("root")!).render(
@@ -15,7 +17,7 @@ createRoot(document.getElementById("root")!).render(
         initialColorMode={theme.config.initialColorMode}
       ></ColorModeScript>
       <QueryClientProvider client={queryClient}>
-        <App />
+        <RouterProvider router={router}></RouterProvider>
         <ReactQueryDevtools />
       </QueryClientProvider>
     </ChakraProvider>
