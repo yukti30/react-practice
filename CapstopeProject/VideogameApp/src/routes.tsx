@@ -3,12 +3,13 @@ import { createBrowserRouter } from "react-router-dom";
 import { Layout } from "./pages/Layout";
 import { Homepage } from "./pages/Homepage";
 import GameDetailPage from "./pages/GameDetailPage";
+import { ErrorPage } from "./pages/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout></Layout>,
-
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         index: true,
